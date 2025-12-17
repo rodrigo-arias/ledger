@@ -177,7 +177,7 @@ struct AddExpenseView: View {
             }
             .navigationTitle("Nuevo Gasto")
             #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
+                .inlineNavigationTitle()
             #endif
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {

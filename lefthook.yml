@@ -1,0 +1,14 @@
+pre-commit:
+  parallel: true
+  commands:
+    swiftformat:
+      glob: "*.swift"
+      run: swiftformat . --lint
+    swiftlint:
+      glob: "*.swift"
+      run: swiftlint lint --strict
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx commitlint --edit {1}

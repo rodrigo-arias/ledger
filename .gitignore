@@ -26,3 +26,6 @@ DerivedData/
 *.dSYM
 *.xcarchive
 *.crash
+
+# Node
+node_modules/

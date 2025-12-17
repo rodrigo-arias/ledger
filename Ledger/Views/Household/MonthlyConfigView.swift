@@ -158,7 +158,7 @@ struct MonthlyConfigView: View {
             }
             .navigationTitle(monthName)
             #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
+                .inlineNavigationTitle()
             #endif
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {

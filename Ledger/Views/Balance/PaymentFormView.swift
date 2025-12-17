@@ -144,7 +144,7 @@ struct PaymentFormView: View {
             }
             .navigationTitle(isEditing ? "Editar pago" : "Nuevo pago")
             #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
+                .inlineNavigationTitle()
             #endif
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {

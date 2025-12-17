@@ -40,6 +40,8 @@ extension Decimal {
         let percentage = self * 100
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
+        formatter.groupingSeparator = "."
+        formatter.decimalSeparator = ","
         formatter.maximumFractionDigits = 1
         formatter.minimumFractionDigits = 0
 

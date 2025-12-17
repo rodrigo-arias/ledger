@@ -49,7 +49,7 @@ struct HouseholdSetupView: View {
             }
             .navigationTitle("Configurar")
             #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
+                .inlineNavigationTitle()
             #endif
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {

@@ -132,7 +132,7 @@ struct ExpenseDetailView: View {
             }
             .navigationTitle("Editar Gasto")
             #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
+                .inlineNavigationTitle()
             #endif
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {

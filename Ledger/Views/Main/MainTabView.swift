@@ -253,7 +253,7 @@ struct SettingsPlaceholderView: View {
                     }
                 }
                 .navigationTitle("Editar Miembro")
-                .navigationBarTitleDisplayMode(.inline)
+                .inlineNavigationTitle()
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Cancelar") {
@@ -300,7 +300,7 @@ struct SettingsPlaceholderView: View {
                     }
                 }
                 .navigationTitle(editingCategory == nil ? "Nueva Categoría" : "Editar Categoría")
-                .navigationBarTitleDisplayMode(.inline)
+                .inlineNavigationTitle()
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Cancelar") {
@@ -346,7 +346,7 @@ struct SettingsPlaceholderView: View {
                     selectedMonth = household.historicalDataUntilMonth ?? Date().month
                 }
                 .navigationTitle("Datos Históricos")
-                .navigationBarTitleDisplayMode(.inline)
+                .inlineNavigationTitle()
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Cancelar") {
