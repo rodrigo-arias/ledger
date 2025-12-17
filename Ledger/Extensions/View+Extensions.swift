@@ -12,7 +12,7 @@ extension View {
     @ViewBuilder
     func numericKeyboard() -> some View {
         #if os(iOS)
-        self.keyboardType(.decimalPad)
+        keyboardType(.decimalPad)
         #else
         self
         #endif
@@ -21,6 +21,6 @@ extension View {
     /// Aplica textAlignment solo donde está disponible.
     @ViewBuilder
     func trailingAlignment() -> some View {
-        self.multilineTextAlignment(.trailing)
+        multilineTextAlignment(.trailing)
     }
 }

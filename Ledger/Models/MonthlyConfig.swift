@@ -13,16 +13,16 @@ import SwiftData
 final class MonthlyConfig {
     var id: UUID
     var year: Int
-    var month: Int  // 1-12
-    var exchangeRate: Decimal  // ARS por USD
-    var incomeUSD: Decimal  // Ingreso de esta persona en USD
-    var fixedExpensesDebtorId: UUID?  // ID de la persona que debe los gastos fijos este mes
+    var month: Int // 1-12
+    var exchangeRate: Decimal // ARS por USD
+    var incomeUSD: Decimal // Ingreso de esta persona en USD
+    var fixedExpensesDebtorId: UUID? // ID de la persona que debe los gastos fijos este mes
 
     var person: Person?
     var household: Household?
 
     init(year: Int, month: Int, exchangeRate: Decimal, incomeUSD: Decimal, fixedExpensesDebtorId: UUID? = nil) {
-        self.id = UUID()
+        id = UUID()
         self.year = year
         self.month = month
         self.exchangeRate = exchangeRate
@@ -34,7 +34,7 @@ final class MonthlyConfig {
     /// Requiere acceso a todos los configs del mismo mes.
     func contributionPercentage(allConfigsForMonth: [MonthlyConfig]) -> Decimal {
         let totalIncome = allConfigsForMonth.reduce(Decimal.zero) { $0 + $1.incomeUSD }
-        guard totalIncome > 0 else { return 0.5 }  // 50% por defecto si no hay ingresos
+        guard totalIncome > 0 else { return 0.5 } // 50% por defecto si no hay ingresos
         return incomeUSD / totalIncome
     }
 }

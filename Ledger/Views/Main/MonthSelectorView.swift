@@ -76,7 +76,7 @@ struct MonthSelectorView: View {
 }
 
 #Preview {
-    @Previewable @State var year = 2025
+    @Previewable @State var year = 2_025
     @Previewable @State var month = 12
     MonthSelectorView(year: $year, month: $month)
 }

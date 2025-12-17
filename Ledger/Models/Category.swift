@@ -19,7 +19,7 @@ final class Category {
     var expenses: [Expense] = []
 
     init(name: String, emoji: String? = nil, sortOrder: Int = 0) {
-        self.id = UUID()
+        id = UUID()
         self.name = name
         self.emoji = emoji
         self.sortOrder = sortOrder

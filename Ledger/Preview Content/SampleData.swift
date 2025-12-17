@@ -23,7 +23,7 @@ enum SampleData {
             MonthlyConfig.self,
             Expense.self,
             Payment.self,
-            MonthlyClose.self,
+            MonthlyClose.self
         ])
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try! ModelContainer(for: schema, configurations: [config])
@@ -47,7 +47,7 @@ enum SampleData {
     }
 
     static var sampleExpense: Expense {
-        household.expenses.first ?? Expense(amount: 1000, concept: "Ejemplo")
+        household.expenses.first ?? Expense(amount: 1_000, concept: "Ejemplo")
     }
 
     static var samplePerson: Person {

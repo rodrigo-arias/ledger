@@ -13,7 +13,7 @@ struct MonthlyBalance {
     let totalExpensesUSD: Decimal
     let byPerson: [UUID: PersonBalance]
     let carryOver: Decimal
-    let netBalance: Decimal  // Positivo = persona 1 debe cobrar
+    let netBalance: Decimal // Positivo = persona 1 debe cobrar
     let creditor: Person?
     let debtor: Person?
     let byCategory: [UUID: CategoryBalance]
@@ -22,8 +22,8 @@ struct MonthlyBalance {
 /// Balance de una persona.
 struct PersonBalance {
     let person: Person
-    let paid: Decimal       // Lo que pagó (ARS)
-    let expected: Decimal   // Lo que debería según %
+    let paid: Decimal // Lo que pagó (ARS)
+    let expected: Decimal // Lo que debería según %
     let difference: Decimal // paid - expected (+ = a favor, - = en contra)
     let contributionPercent: Decimal
 }
@@ -82,7 +82,7 @@ enum BalanceCalculator {
         let carryOver = previousClose?.balanceAtClose ?? Decimal.zero
 
         // Balance neto (solo funciona con 2 personas)
-        let balances = byPerson.values.map { $0.difference }
+        let balances = byPerson.values.map(\.difference)
         let netBalance = (balances.first ?? 0) + carryOver
 
         // Determinar acreedor y deudor
@@ -116,8 +116,9 @@ enum BalanceCalculator {
         let grouped = Dictionary(grouping: expenses) { $0.category?.id }
 
         for (categoryId, categoryExpenses) in grouped {
-            guard let categoryId = categoryId,
-                  let category = categoryExpenses.first?.category else { continue }
+            guard let categoryId,
+                  let category = categoryExpenses.first?.category
+            else { continue }
 
             let total = categoryExpenses.reduce(Decimal.zero) {
                 $0 + $1.amountInARS(exchangeRate: exchangeRate)

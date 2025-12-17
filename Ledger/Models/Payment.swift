@@ -23,20 +23,20 @@ final class Payment {
         currency: Currency,
         date: Date = Date()
     ) {
-        self.id = UUID()
+        id = UUID()
         self.amount = amount
         self.currency = currency
         self.date = date
-        self.createdAt = Date()
+        createdAt = Date()
     }
 
     /// Calcula el valor del pago en ARS usando el tipo de cambio dado.
     func amountInARS(exchangeRate: Decimal) -> Decimal {
         switch currency {
         case .ars:
-            return amount
+            amount
         case .usd:
-            return amount * exchangeRate
+            amount * exchangeRate
         }
     }
 }

@@ -5,8 +5,8 @@
 //  Vista para configurar el tipo de cambio e ingresos del mes.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct MonthlyConfigView: View {
     @Environment(\.modelContext) private var modelContext
@@ -139,7 +139,8 @@ struct MonthlyConfigView: View {
                     Text("Ingresos mensuales")
                 } footer: {
                     if let pct1 = percentage1, let pct2 = percentage2,
-                       let p1 = person1, let p2 = person2 {
+                       let p1 = person1, let p2 = person2
+                    {
                         Text("\(p1.name) aporta \(pct1)% • \(p2.name) aporta \(pct2)%")
                     }
                 }
@@ -157,21 +158,21 @@ struct MonthlyConfigView: View {
             }
             .navigationTitle(monthName)
             #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar") { dismiss() }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(isEditing ? "Actualizar" : "Guardar") {
-                        saveConfig()
-                        dismiss()
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancelar") { dismiss() }
                     }
-                    .disabled(!isValid)
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button(isEditing ? "Actualizar" : "Guardar") {
+                            saveConfig()
+                            dismiss()
+                        }
+                        .disabled(!isValid)
+                    }
                 }
-            }
-            .onAppear { loadConfig() }
+                .onAppear { loadConfig() }
         }
     }
 
@@ -211,7 +212,8 @@ struct MonthlyConfigView: View {
     private func saveConfig() {
         guard let tc = parsedExchangeRate,
               let i1 = parsedIncome1,
-              let i2 = parsedIncome2 else { return }
+              let i2 = parsedIncome2
+        else { return }
 
         let existingConfigs = household.monthlyConfigs.filter { $0.year == year && $0.month == month }
         for config in existingConfigs {
@@ -237,7 +239,7 @@ struct MonthlyConfigView: View {
 #Preview {
     MonthlyConfigView(
         household: SampleData.household,
-        year: 2025,
+        year: 2_025,
         month: 12
     )
     .modelContainer(SampleData.container)

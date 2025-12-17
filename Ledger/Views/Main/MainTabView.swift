@@ -5,8 +5,8 @@
 //  Vista principal con navegación por tabs (iOS) o sidebar (macOS).
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct MainTabView: View {
     let household: Household
@@ -98,7 +98,7 @@ struct SettingsPlaceholderView: View {
 
     @State private var showingHistoricalMonthEditor = false
     @State private var hasHistoricalLimit = false
-    @State private var selectedYear = 2025
+    @State private var selectedYear = 2_025
     @State private var selectedMonth = 1
 
     @State private var showingCategoryEditor = false
@@ -115,7 +115,8 @@ struct SettingsPlaceholderView: View {
 
     private var historicalMonthText: String {
         if let year = household.historicalDataUntilYear,
-           let month = household.historicalDataUntilMonth {
+           let month = household.historicalDataUntilMonth
+        {
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "es_AR")
             let monthName = dateFormatter.monthSymbols[month - 1].capitalized
@@ -126,13 +127,13 @@ struct SettingsPlaceholderView: View {
 
     private var yearRange: [Int] {
         let currentYear = Date().year
-        return Array((currentYear - 5)...(currentYear))
+        return Array((currentYear - 5) ... currentYear)
     }
 
     private var monthNames: [String] {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "es_AR")
-        return formatter.monthSymbols.map { $0.capitalized }
+        return formatter.monthSymbols.map(\.capitalized)
     }
 
     private var sortedCategories: [Category] {
@@ -240,7 +241,7 @@ struct SettingsPlaceholderView: View {
         }
         .navigationTitle("Configuración")
         .alert("Error al eliminar", isPresented: $showingDeleteError) {
-            Button("OK", role: .cancel) { }
+            Button("OK", role: .cancel) {}
         } message: {
             Text(deleteErrorMessage)
         }
@@ -326,7 +327,7 @@ struct SettingsPlaceholderView: View {
                     if hasHistoricalLimit {
                         Section("Seleccionar mes límite") {
                             Picker("Mes", selection: $selectedMonth) {
-                                ForEach(1...12, id: \.self) { month in
+                                ForEach(1 ... 12, id: \.self) { month in
                                     Text(monthNames[month - 1]).tag(month)
                                 }
                             }

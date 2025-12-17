@@ -3,8 +3,8 @@
 //  Ledger
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 @main
 struct LedgerApp: App {
@@ -23,7 +23,7 @@ struct LedgerApp: App {
             MonthlyConfig.self,
             Expense.self,
             Payment.self,
-            MonthlyClose.self,
+            MonthlyClose.self
         ])
 
         #if DEBUG

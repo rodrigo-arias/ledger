@@ -5,8 +5,8 @@
 //  Fila individual que muestra un gasto en la lista.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct ExpenseRowView: View {
     let expense: Expense
@@ -51,7 +51,7 @@ struct ExpenseRowView: View {
                     .fontWeight(.medium)
 
                 // Si es USD, mostrar equivalente en ARS
-                if expense.currency == .usd && exchangeRate > 0 {
+                if expense.currency == .usd, exchangeRate > 0 {
                     let arsAmount = expense.amountInARS(exchangeRate: exchangeRate)
                     Text(arsAmount.formatted(currency: .ars))
                         .font(.caption)
@@ -67,7 +67,7 @@ struct ExpenseRowView: View {
     List {
         ExpenseRowView(
             expense: SampleData.sampleExpense,
-            exchangeRate: 1400
+            exchangeRate: 1_400
         )
     }
     .modelContainer(SampleData.container)

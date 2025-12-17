@@ -31,15 +31,15 @@ final class Expense {
         date: Date? = nil,
         hasSpecificDate: Bool = true
     ) {
-        self.id = UUID()
+        id = UUID()
         self.amount = amount
         self.currency = currency
         self.concept = concept
         self.note = note
         self.date = date
         self.hasSpecificDate = hasSpecificDate
-        self.createdAt = Date()
-        self.updatedAt = Date()
+        createdAt = Date()
+        updatedAt = Date()
     }
 
     /// Año y mes del gasto (para agrupar y buscar config).
@@ -47,8 +47,10 @@ final class Expense {
     var yearMonth: (year: Int, month: Int) {
         let calendar = Calendar.current
         let effectiveDate = date ?? createdAt
-        return (calendar.component(.year, from: effectiveDate),
-                calendar.component(.month, from: effectiveDate))
+        return (
+            calendar.component(.year, from: effectiveDate),
+            calendar.component(.month, from: effectiveDate)
+        )
     }
 
     /// Convierte el monto a ARS usando el tipo de cambio del mes.
@@ -56,9 +58,9 @@ final class Expense {
     func amountInARS(exchangeRate: Decimal) -> Decimal {
         switch currency {
         case .ars:
-            return amount
+            amount
         case .usd:
-            return amount * exchangeRate
+            amount * exchangeRate
         }
     }
 }

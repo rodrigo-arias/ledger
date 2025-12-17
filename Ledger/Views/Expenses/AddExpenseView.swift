@@ -5,8 +5,8 @@
 //  Formulario para agregar un nuevo gasto.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct AddExpenseView: View {
     @Environment(\.modelContext) private var modelContext
@@ -58,16 +58,16 @@ struct AddExpenseView: View {
     /// Calcula frecuencias de conceptos (se ejecuta una vez al aparecer)
     private func loadConceptSuggestions() {
         let householdExpenses = allExpenses.filter { $0.household?.id == household.id }
-        let concepts = householdExpenses.map { $0.concept }
+        let concepts = householdExpenses.map(\.concept)
         let frequency = Dictionary(grouping: concepts, by: { $0 }).mapValues { $0.count }
-        cachedConceptsByFrequency = frequency.sorted { $0.value > $1.value }.map { $0.key }
+        cachedConceptsByFrequency = frequency.sorted { $0.value > $1.value }.map(\.key)
     }
 
     var body: some View {
         NavigationStack {
             Form {
                 // Chips de selección rápida para conceptos frecuentes
-                if !frequentConcepts.isEmpty && concept.isEmpty {
+                if !frequentConcepts.isEmpty, concept.isEmpty {
                     Section {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 8) {
@@ -164,7 +164,7 @@ struct AddExpenseView: View {
                     Toggle("Gasto fijo", isOn: $isFixedExpense)
 
                     Toggle("Agregar fecha", isOn: $hasDate)
-                    
+
                     if hasDate {
                         DatePicker("Fecha", selection: $date, displayedComponents: .date)
                     }
@@ -172,40 +172,40 @@ struct AddExpenseView: View {
 
                 Section {
                     TextField("Nota (opcional)", text: $note, axis: .vertical)
-                        .lineLimit(2...4)
+                        .lineLimit(2 ... 4)
                 }
             }
             .navigationTitle("Nuevo Gasto")
             #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar") {
-                        dismiss()
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancelar") {
+                            dismiss()
+                        }
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Guardar") {
+                            saveExpense()
+                            dismiss()
+                        }
+                        .disabled(!isValid)
                     }
                 }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Guardar") {
-                        saveExpense()
-                        dismiss()
-                    }
-                    .disabled(!isValid)
+                .onAppear {
+                    selectedPerson = currentUser
+                    selectedCategory = categories.first { $0.name == "Comida" }
+                    loadConceptSuggestions()
                 }
-            }
-            .onAppear {
-                selectedPerson = currentUser
-                selectedCategory = categories.first { $0.name == "Comida" }
-                loadConceptSuggestions()
-            }
         }
     }
 
     private var isValid: Bool {
         !concept.trimmingCharacters(in: .whitespaces).isEmpty &&
-        parsedAmount != nil &&
-        parsedAmount! != 0 &&
-        selectedPerson != nil
+            parsedAmount != nil &&
+            parsedAmount! != 0 &&
+            selectedPerson != nil
     }
 
     private var parsedAmount: Decimal? {

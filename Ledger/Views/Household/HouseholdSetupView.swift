@@ -5,8 +5,8 @@
 //  Vista inicial para configurar el household y las dos personas.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct HouseholdSetupView: View {
     @Environment(\.modelContext) private var modelContext
@@ -49,23 +49,23 @@ struct HouseholdSetupView: View {
             }
             .navigationTitle("Configurar")
             #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Crear") {
-                        createHousehold()
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Crear") {
+                            createHousehold()
+                        }
+                        .disabled(!isValid)
                     }
-                    .disabled(!isValid)
                 }
-            }
         }
     }
 
     private var isValid: Bool {
         !householdName.trimmingCharacters(in: .whitespaces).isEmpty &&
-        !person1Name.trimmingCharacters(in: .whitespaces).isEmpty &&
-        !person2Name.trimmingCharacters(in: .whitespaces).isEmpty
+            !person1Name.trimmingCharacters(in: .whitespaces).isEmpty &&
+            !person2Name.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
     private func createHousehold() {

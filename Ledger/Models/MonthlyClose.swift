@@ -12,13 +12,13 @@ import SwiftData
 final class MonthlyClose {
     var id: UUID
     var year: Int
-    var month: Int  // 1-12
+    var month: Int // 1-12
     var closedAt: Date
 
     // Snapshot de valores al momento del cierre
-    var totalExpensesARS: Decimal      // Total de gastos del mes en ARS
-    var carryOverFromPrevious: Decimal  // Arrastre del mes anterior
-    var balanceAtClose: Decimal         // Saldo pendiente al cierre (se arrastra)
+    var totalExpensesARS: Decimal // Total de gastos del mes en ARS
+    var carryOverFromPrevious: Decimal // Arrastre del mes anterior
+    var balanceAtClose: Decimal // Saldo pendiente al cierre (se arrastra)
 
     // Tipo de cambio usado para los cálculos
     var exchangeRateUsed: Decimal
@@ -38,10 +38,10 @@ final class MonthlyClose {
         balanceAtClose: Decimal,
         exchangeRateUsed: Decimal
     ) {
-        self.id = UUID()
+        id = UUID()
         self.year = year
         self.month = month
-        self.closedAt = Date()
+        closedAt = Date()
         self.totalExpensesARS = totalExpensesARS
         self.carryOverFromPrevious = carryOverFromPrevious
         self.balanceAtClose = balanceAtClose
