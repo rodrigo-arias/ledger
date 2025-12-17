@@ -1,0 +1,31 @@
+# Context folder
+.context/
+
+# Personal sample data
+**/SampleDataPersonal.swift
+
+# Claude Code
+.claude/
+
+# Xcode
+build/
+DerivedData/
+**/xcuserdata/
+
+# macOS
+.DS_Store
+._*
+
+# IDEs
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Build outputs
+*.ipa
+*.dSYM.zip
+*.dSYM
+*.xcarchive
+*.crash
