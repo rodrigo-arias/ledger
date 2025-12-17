@@ -1,9 +1,7 @@
-name: Lint
+name: CI
 
 on:
   pull_request:
-    branches: [main]
-  push:
     branches: [main]
 
 jobs:
@@ -28,3 +26,17 @@ jobs:
 
       - name: Run SwiftFormat
         run: swiftformat . --lint
+
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build iOS
+        run: |
+          xcodebuild build \
+            -project Ledger.xcodeproj \
+            -scheme Ledger \
+            -destination 'generic/platform=iOS Simulator' \
+            -skipMacroValidation \
+            CODE_SIGNING_ALLOWED=NO
