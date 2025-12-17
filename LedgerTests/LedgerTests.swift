@@ -3,8 +3,8 @@
 //  LedgerTests
 //
 
-import XCTest
 @testable import Ledger
+import XCTest
 
 final class LedgerTests: XCTestCase {
 

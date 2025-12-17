@@ -3,8 +3,8 @@
 //  LedgerTests
 //
 
-import XCTest
 @testable import Ledger
+import XCTest
 
 final class DecimalExtensionsTests: XCTestCase {
 
@@ -23,7 +23,7 @@ final class DecimalExtensionsTests: XCTestCase {
     }
 
     func testFormattedCurrency_withDecimals() {
-        let amount: Decimal = 1234.56
+        let amount: Decimal = 1_234.56
         let result = amount.formatted(currency: .ars, showDecimals: true)
         XCTAssertEqual(result, "$1.234,56")
     }
@@ -43,7 +43,7 @@ final class DecimalExtensionsTests: XCTestCase {
     }
 
     func testFormattedAmount_withDecimals() {
-        let amount: Decimal = 1234.56
+        let amount: Decimal = 1_234.56
         let result = amount.formattedAmount(showDecimals: true)
         XCTAssertEqual(result, "1.234,56")
     }
