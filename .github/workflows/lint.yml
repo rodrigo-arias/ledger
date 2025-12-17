@@ -40,3 +40,16 @@ jobs:
             -destination 'generic/platform=iOS Simulator' \
             -skipMacroValidation \
             CODE_SIGNING_ALLOWED=NO
+
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Tests
+        run: |
+          xcodebuild test \
+            -project Ledger.xcodeproj \
+            -scheme Ledger \
+            -destination 'platform=macOS' \
+            -skipMacroValidation

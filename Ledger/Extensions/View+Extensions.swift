@@ -23,4 +23,14 @@ extension View {
     func trailingAlignment() -> some View {
         multilineTextAlignment(.trailing)
     }
+
+    /// Aplica navigationBarTitleDisplayMode solo en iOS.
+    @ViewBuilder
+    func inlineNavigationTitle() -> some View {
+        #if os(iOS)
+        navigationBarTitleDisplayMode(.inline)
+        #else
+        self
+        #endif
+    }
 }
