@@ -1,9 +1,6 @@
 # Context folder
 .context/
 
-# Personal sample data
-**/SampleDataPersonal.swift
-
 # Claude Code
 .claude/
 
