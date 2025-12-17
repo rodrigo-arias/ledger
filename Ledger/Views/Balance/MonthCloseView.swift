@@ -5,8 +5,8 @@
 //  Vista para cerrar un mes registrando pagos del deudor al acreedor.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct MonthCloseView: View {
     @Environment(\.modelContext) private var modelContext
@@ -31,8 +31,8 @@ struct MonthCloseView: View {
     private var existingClose: MonthlyClose? {
         allCloses.first {
             $0.household?.id == household.id &&
-            $0.year == year &&
-            $0.month == month
+                $0.year == year &&
+                $0.month == month
         }
     }
 
@@ -83,30 +83,30 @@ struct MonthCloseView: View {
             }
             .navigationTitle("\(monthName) \(year)")
             #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Listo") { dismiss() }
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Listo") { dismiss() }
+                    }
                 }
-            }
-            .onAppear { loadOrCreateClose() }
-            .sheet(isPresented: $showingPaymentForm) {
-                PaymentFormView(
-                    payment: editingPayment,
-                    remainingARS: remainingARS,
-                    exchangeRate: exchangeRate,
-                    onSave: { amount, currency, date in
-                        savePayment(amount: amount, currency: currency, date: date)
-                    },
-                    onDelete: editingPayment != nil ? {
-                        if let payment = editingPayment {
-                            modelContext.delete(payment)
-                        }
-                        editingPayment = nil
-                    } : nil
-                )
-            }
+                .onAppear { loadOrCreateClose() }
+                .sheet(isPresented: $showingPaymentForm) {
+                    PaymentFormView(
+                        payment: editingPayment,
+                        remainingARS: remainingARS,
+                        exchangeRate: exchangeRate,
+                        onSave: { amount, currency, date in
+                            savePayment(amount: amount, currency: currency, date: date)
+                        },
+                        onDelete: editingPayment != nil ? {
+                            if let payment = editingPayment {
+                                modelContext.delete(payment)
+                            }
+                            editingPayment = nil
+                        } : nil
+                    )
+                }
         }
     }
 
@@ -114,7 +114,7 @@ struct MonthCloseView: View {
 
     private var balanceSection: some View {
         Section("Balance") {
-            if let debtor = debtor, let creditor = creditor {
+            if let debtor, let creditor {
                 LabeledContent("\(debtor.name) debe a \(creditor.name)") {
                     Text(abs(totalBalance).formatted(currency: .ars))
                 }
@@ -283,10 +283,10 @@ struct PaymentRow: View {
 #Preview {
     MonthCloseView(
         household: SampleData.household,
-        year: 2025,
+        year: 2_025,
         month: 12,
-        totalBalance: 500000,
-        exchangeRate: 1410
+        totalBalance: 500_000,
+        exchangeRate: 1_410
     )
     .modelContainer(SampleData.container)
 }

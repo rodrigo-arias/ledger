@@ -5,8 +5,8 @@
 //  Lista de gastos con filtros y ordenamiento.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 // MARK: - Filtro y ordenamiento de gastos
 
@@ -69,7 +69,7 @@ struct ExpenseListView: View {
                 (expense.date ?? expense.createdAt).monthYearFormat
             }
             return grouped.map { (key: $0.key, expenses: $0.value) }
-                .sorted { 
+                .sorted {
                     let date1 = $0.expenses.first?.date ?? $0.expenses.first?.createdAt ?? Date()
                     let date2 = $1.expenses.first?.date ?? $1.expenses.first?.createdAt ?? Date()
                     return date1 > date2
@@ -225,31 +225,31 @@ struct ExpenseListView: View {
     private func filterLabel(for filter: ExpenseFilter) -> String {
         switch filter {
         case .me:
-            return currentUser?.name ?? "Míos"
+            currentUser?.name ?? "Míos"
         case .other:
-            return otherUser?.name ?? "Otro"
+            otherUser?.name ?? "Otro"
         case .all:
-            return "Todos"
+            "Todos"
         }
     }
 
     private func filterIcon(for filter: ExpenseFilter) -> String {
         switch filter {
         case .me:
-            return "person.fill"
+            "person.fill"
         case .other:
-            return "person"
+            "person"
         case .all:
-            return "person.2"
+            "person.2"
         }
     }
 
     private func sortIcon(for sort: ExpenseSort) -> String {
         switch sort {
         case .byDate:
-            return "calendar"
+            "calendar"
         case .byCategory:
-            return "folder"
+            "folder"
         }
     }
 
@@ -260,11 +260,11 @@ struct ExpenseListView: View {
     private var emptyStateMessage: String {
         switch expenseFilter {
         case .me:
-            return "No tenés gastos registrados"
+            "No tenés gastos registrados"
         case .other:
-            return "\(otherUser?.name ?? "La otra persona") no tiene gastos"
+            "\(otherUser?.name ?? "La otra persona") no tiene gastos"
         case .all:
-            return "Agregá tu primer gasto tocando +"
+            "Agregá tu primer gasto tocando +"
         }
     }
 }

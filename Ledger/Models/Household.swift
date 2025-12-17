@@ -32,17 +32,18 @@ final class Household {
     var monthlyCloses: [MonthlyClose] = []
 
     init(name: String) {
-        self.id = UUID()
+        id = UUID()
         self.name = name
-        self.createdAt = Date()
-        self.historicalDataUntilYear = nil
-        self.historicalDataUntilMonth = nil
+        createdAt = Date()
+        historicalDataUntilYear = nil
+        historicalDataUntilMonth = nil
     }
 
     /// Verifica si un mes es histórico
     func isHistoricalMonth(year: Int, month: Int) -> Bool {
         guard let histYear = historicalDataUntilYear,
-              let histMonth = historicalDataUntilMonth else {
+              let histMonth = historicalDataUntilMonth
+        else {
             return false
         }
 

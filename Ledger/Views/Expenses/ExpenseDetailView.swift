@@ -5,8 +5,8 @@
 //  Vista de detalle y edición de un gasto.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct ExpenseDetailView: View {
     @Environment(\.modelContext) private var modelContext
@@ -21,7 +21,7 @@ struct ExpenseDetailView: View {
     @State private var amountText: String = ""
     @State private var currency: Currency = .ars
     @State private var hasDate: Bool = false
-    @State private var date: Date = Date()
+    @State private var date: Date = .init()
     @State private var note: String = ""
     @State private var selectedCategory: Category?
     @State private var selectedPerson: Person?
@@ -37,9 +37,9 @@ struct ExpenseDetailView: View {
         let (year, month) = expense.yearMonth
         return allCloses.contains {
             $0.household?.id == household.id &&
-            $0.year == year &&
-            $0.month == month &&
-            $0.isClosed
+                $0.year == year &&
+                $0.month == month &&
+                $0.isClosed
         }
     }
 
@@ -112,7 +112,7 @@ struct ExpenseDetailView: View {
 
                 Section {
                     TextField("Nota (opcional)", text: $note, axis: .vertical)
-                        .lineLimit(2...4)
+                        .lineLimit(2 ... 4)
                         .disabled(isMonthClosed)
                 }
 
@@ -132,43 +132,43 @@ struct ExpenseDetailView: View {
             }
             .navigationTitle("Editar Gasto")
             #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar") {
-                        dismiss()
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancelar") {
+                            dismiss()
+                        }
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Guardar") {
+                            saveChanges()
+                            dismiss()
+                        }
+                        .disabled(!isValid || isMonthClosed)
                     }
                 }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Guardar") {
-                        saveChanges()
-                        dismiss()
+                .onAppear {
+                    loadExpense()
+                }
+                .confirmationDialog(
+                    "¿Eliminar este gasto?",
+                    isPresented: $showingDeleteConfirmation,
+                    titleVisibility: .visible
+                ) {
+                    Button("Eliminar", role: .destructive) {
+                        deleteExpense()
                     }
-                    .disabled(!isValid || isMonthClosed)
+                    Button("Cancelar", role: .cancel) {}
                 }
-            }
-            .onAppear {
-                loadExpense()
-            }
-            .confirmationDialog(
-                "¿Eliminar este gasto?",
-                isPresented: $showingDeleteConfirmation,
-                titleVisibility: .visible
-            ) {
-                Button("Eliminar", role: .destructive) {
-                    deleteExpense()
-                }
-                Button("Cancelar", role: .cancel) {}
-            }
         }
     }
 
     private var isValid: Bool {
         !concept.trimmingCharacters(in: .whitespaces).isEmpty &&
-        parsedAmount != nil &&
-        parsedAmount! != 0 &&
-        selectedPerson != nil
+            parsedAmount != nil &&
+            parsedAmount! != 0 &&
+            selectedPerson != nil
     }
 
     private var parsedAmount: Decimal? {

@@ -1,0 +1,33 @@
+# SwiftFormat configuration
+
+# Format options
+--swiftversion 5.9
+--indent 4
+--indentcase false
+--trimwhitespace always
+--voidtype void
+--wrapcollections before-first
+--maxwidth 150
+--wraparguments before-first
+--wrapparameters before-first
+--closingparen balanced
+--commas inline
+--decimalgrouping 3,4
+--elseposition same-line
+--guardelse next-line
+--header ignore
+--ifdef no-indent
+--importgrouping alpha
+--operatorfunc spaced
+--ranges spaced
+--self remove
+--semicolons never
+--stripunusedargs closure-only
+--xcodeindentation enabled
+
+# Excluded paths
+--exclude .build,DerivedData,Pods
+
+# Disabled rules
+--disable blankLinesAtStartOfScope
+--disable blankLinesAtEndOfScope

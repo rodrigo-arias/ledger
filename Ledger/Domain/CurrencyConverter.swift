@@ -10,9 +10,9 @@ enum CurrencyConverter {
     static func toARS(amount: Decimal, currency: Currency, exchangeRate: Decimal) -> Decimal {
         switch currency {
         case .ars:
-            return amount
+            amount
         case .usd:
-            return amount * exchangeRate
+            amount * exchangeRate
         }
     }
 

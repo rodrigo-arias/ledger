@@ -13,15 +13,15 @@ enum Currency: String, Codable, CaseIterable, Identifiable {
 
     var symbol: String {
         switch self {
-        case .ars: return "$"
-        case .usd: return "US$"
+        case .ars: "$"
+        case .usd: "US$"
         }
     }
 
     var name: String {
         switch self {
-        case .ars: return "Pesos Argentinos"
-        case .usd: return "Dólares"
+        case .ars: "Pesos Argentinos"
+        case .usd: "Dólares"
         }
     }
 }

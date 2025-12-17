@@ -21,7 +21,7 @@ final class Person {
     var monthlyConfigs: [MonthlyConfig] = []
 
     init(name: String, isCurrentUser: Bool = false) {
-        self.id = UUID()
+        id = UUID()
         self.name = name
         self.isCurrentUser = isCurrentUser
     }

@@ -50,7 +50,7 @@ struct PaymentFormView: View {
     var body: some View {
         NavigationStack {
             Form {
-                if !isEditing && remainingARS > 0 && amountText.isEmpty {
+                if !isEditing, remainingARS > 0, amountText.isEmpty {
                     Section {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 8) {
@@ -117,7 +117,7 @@ struct PaymentFormView: View {
                     DatePicker("Fecha", selection: $date, displayedComponents: .date)
                 }
 
-                if !isEditing && parsedAmount != nil {
+                if !isEditing, parsedAmount != nil {
                     Section {
                         LabeledContent("Resto después de este pago") {
                             Text(remainingAfterPayment.formatted(currency: .ars))
@@ -127,7 +127,7 @@ struct PaymentFormView: View {
                     }
                 }
 
-                if isEditing && onDelete != nil {
+                if isEditing, onDelete != nil {
                     Section {
                         Button(role: .destructive) {
                             onDelete?()
@@ -144,41 +144,41 @@ struct PaymentFormView: View {
             }
             .navigationTitle(isEditing ? "Editar pago" : "Nuevo pago")
             #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
+                .navigationBarTitleDisplayMode(.inline)
             #endif
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar") { dismiss() }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Guardar") {
-                        if let amount = parsedAmount {
-                            onSave(amount, currency, date)
-                            dismiss()
-                        }
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancelar") { dismiss() }
                     }
-                    .disabled(!isValid)
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Guardar") {
+                            if let amount = parsedAmount {
+                                onSave(amount, currency, date)
+                                dismiss()
+                            }
+                        }
+                        .disabled(!isValid)
+                    }
                 }
-            }
-            .onAppear {
-                if let payment = payment {
-                    amountText = payment.amount.formattedAmount()
-                    currency = payment.currency
-                    date = payment.date
+                .onAppear {
+                    if let payment {
+                        amountText = payment.amount.formattedAmount()
+                        currency = payment.currency
+                        date = payment.date
+                    }
                 }
-            }
         }
     }
 }
 
 #Preview("Nuevo") {
-    PaymentFormView(payment: nil, remainingARS: 500000, exchangeRate: 1410) { _, _, _ in }
+    PaymentFormView(payment: nil, remainingARS: 500_000, exchangeRate: 1_410) { _, _, _ in }
 }
 
 #Preview("Editar") {
     PaymentFormView(
         payment: Payment(amount: 200, currency: .usd),
-        remainingARS: 218000,
-        exchangeRate: 1410
+        remainingARS: 218_000,
+        exchangeRate: 1_410
     ) { _, _, _ in }
 }

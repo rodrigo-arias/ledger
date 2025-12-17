@@ -5,8 +5,8 @@
 //  Vista de balance mensual.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct BalanceView: View {
     let household: Household
@@ -46,16 +46,16 @@ struct BalanceView: View {
         let (prevYear, prevMonth) = previousYearMonth
         return allCloses.first {
             $0.household?.id == household.id &&
-            $0.year == prevYear &&
-            $0.month == prevMonth
+                $0.year == prevYear &&
+                $0.month == prevMonth
         }
     }
 
     private var previousYearMonth: (Int, Int) {
         if selectedMonth == 1 {
-            return (selectedYear - 1, 12)
+            (selectedYear - 1, 12)
         } else {
-            return (selectedYear, selectedMonth - 1)
+            (selectedYear, selectedMonth - 1)
         }
     }
 
@@ -79,7 +79,7 @@ struct BalanceView: View {
     }
 
     private var fixedExpenses: [Expense] {
-        monthExpenses.filter { $0.isFixedExpense }
+        monthExpenses.filter(\.isFixedExpense)
     }
 
     private var hasFixedExpenses: Bool {
@@ -139,8 +139,8 @@ struct BalanceView: View {
     private var currentMonthClose: MonthlyClose? {
         allCloses.first {
             $0.household?.id == household.id &&
-            $0.year == selectedYear &&
-            $0.month == selectedMonth
+                $0.year == selectedYear &&
+                $0.month == selectedMonth
         }
     }
 
