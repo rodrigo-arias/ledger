@@ -52,4 +52,5 @@ jobs:
             -project Ledger.xcodeproj \
             -scheme Ledger \
             -destination 'platform=macOS' \
-            -skipMacroValidation
+            -skipMacroValidation \
+            CODE_SIGNING_ALLOWED=NO
