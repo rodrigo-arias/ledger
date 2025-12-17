@@ -82,8 +82,10 @@ enum BalanceCalculator {
         let carryOver = previousClose?.balanceAtClose ?? Decimal.zero
 
         // Balance neto (solo funciona con 2 personas)
+        // Usa el mayor positivo (quien pagó de más)
         let balances = byPerson.values.map(\.difference)
-        let netBalance = (balances.first ?? 0) + carryOver
+        let maxPositive = balances.max() ?? 0
+        let netBalance = maxPositive + carryOver
 
         // Determinar acreedor y deudor
         let sortedPersons = byPerson.values.sorted { $0.difference > $1.difference }
