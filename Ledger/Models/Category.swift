@@ -8,21 +8,23 @@ import SwiftData
 
 @Model
 final class Category {
-    var id: UUID
-    var name: String
+    var id: UUID = UUID()
+    var name: String = ""
     var emoji: String?
-    var sortOrder: Int
+    var sortOrder: Int = 0
+    var updatedAt: Date = Date()
 
     var household: Household?
 
     @Relationship(inverse: \Expense.category)
-    var expenses: [Expense] = []
+    var expenses: [Expense]?
 
     init(name: String, emoji: String? = nil, sortOrder: Int = 0) {
         id = UUID()
         self.name = name
         self.emoji = emoji
         self.sortOrder = sortOrder
+        updatedAt = Date()
     }
 
     var displayName: String {

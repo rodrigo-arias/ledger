@@ -32,11 +32,11 @@ struct AddExpenseView: View {
     @State private var cachedConceptsByFrequency: [String] = []
 
     private var currentUser: Person? {
-        household.members.first { $0.isCurrentUser }
+        (household.members ?? []).first { $0.isCurrentUser }
     }
 
     private var categories: [Category] {
-        household.categories.sorted { $0.sortOrder < $1.sortOrder }
+        (household.categories ?? []).sorted { $0.sortOrder < $1.sortOrder }
     }
 
     // MARK: - Sugerencias de Concepto
@@ -156,7 +156,7 @@ struct AddExpenseView: View {
 
                     Picker("Pagó", selection: $selectedPerson) {
                         Text("Seleccionar").tag(nil as Person?)
-                        ForEach(household.members) { person in
+                        ForEach(household.members ?? []) { person in
                             Text(person.name).tag(person as Person?)
                         }
                     }

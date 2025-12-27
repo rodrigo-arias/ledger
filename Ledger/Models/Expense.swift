@@ -8,16 +8,22 @@ import SwiftData
 
 @Model
 final class Expense {
-    var id: UUID
-    var amount: Decimal
-    var currency: Currency
-    var concept: String
+    var id: UUID = UUID()
+    var amount: Decimal = 0
+    private var currencyRaw: String = "ARS"
+    var concept: String = ""
+
+    var currency: Currency {
+        get { Currency(rawValue: currencyRaw) ?? .ars }
+        set { currencyRaw = newValue.rawValue }
+    }
+
     var note: String?
     var date: Date?
     var hasSpecificDate: Bool = true
     var isFixedExpense: Bool = false
-    var createdAt: Date
-    var updatedAt: Date
+    var createdAt: Date = Date()
+    var updatedAt: Date = Date()
 
     var category: Category?
     var paidBy: Person?

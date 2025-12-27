@@ -38,8 +38,8 @@ final class BalanceCalculatorTests: XCTestCase {
     func testCalculate_equalIncome_splitsFairly() throws {
         // Setup: Two people with equal income
         let household = Household(name: "Test")
-        let person1 = Person(name: "Person1", isCurrentUser: true)
-        let person2 = Person(name: "Person2", isCurrentUser: false)
+        let person1 = Person(name: "Person1")
+        let person2 = Person(name: "Person2")
         person1.household = household
         person2.household = household
 
@@ -85,8 +85,8 @@ final class BalanceCalculatorTests: XCTestCase {
 
     func testCalculate_unequalIncome_weightedSplit() throws {
         let household = Household(name: "Test")
-        let person1 = Person(name: "HighEarner", isCurrentUser: true)
-        let person2 = Person(name: "LowEarner", isCurrentUser: false)
+        let person1 = Person(name: "HighEarner")
+        let person2 = Person(name: "LowEarner")
         person1.household = household
         person2.household = household
 
@@ -126,7 +126,7 @@ final class BalanceCalculatorTests: XCTestCase {
 
     func testCalculate_withUSDExpense_convertsCorrectly() throws {
         let household = Household(name: "Test")
-        let person1 = Person(name: "Person1", isCurrentUser: true)
+        let person1 = Person(name: "Person1")
         person1.household = household
 
         let config1 = MonthlyConfig(year: 2_025, month: 12, exchangeRate: 1_400, incomeUSD: 1_000, fixedExpensesDebtorId: nil)
@@ -151,8 +151,8 @@ final class BalanceCalculatorTests: XCTestCase {
 
     func testCalculate_withCarryOver_addsToBalance() throws {
         let household = Household(name: "Test")
-        let person1 = Person(name: "Person1", isCurrentUser: true)
-        let person2 = Person(name: "Person2", isCurrentUser: false)
+        let person1 = Person(name: "Person1")
+        let person2 = Person(name: "Person2")
         person1.household = household
         person2.household = household
 
@@ -193,7 +193,7 @@ final class BalanceCalculatorTests: XCTestCase {
 
     func testCalculateByCategory_groupsCorrectly() throws {
         let household = Household(name: "Test")
-        let person1 = Person(name: "Person1", isCurrentUser: true)
+        let person1 = Person(name: "Person1")
         person1.household = household
 
         let category1 = Category(name: "Comida", emoji: "🍕", sortOrder: 0)
@@ -234,7 +234,7 @@ final class BalanceCalculatorTests: XCTestCase {
 
     func testCalculate_noExpenses_returnsZeroTotals() throws {
         let household = Household(name: "Test")
-        let person1 = Person(name: "Person1", isCurrentUser: true)
+        let person1 = Person(name: "Person1")
         person1.household = household
 
         let config1 = MonthlyConfig(year: 2_025, month: 12, exchangeRate: 1_000, incomeUSD: 1_000, fixedExpensesDebtorId: nil)
@@ -255,7 +255,7 @@ final class BalanceCalculatorTests: XCTestCase {
 
     func testCalculate_negativeExpense_subtractsFromTotal() throws {
         let household = Household(name: "Test")
-        let person1 = Person(name: "Person1", isCurrentUser: true)
+        let person1 = Person(name: "Person1")
         person1.household = household
 
         let config1 = MonthlyConfig(year: 2_025, month: 12, exchangeRate: 1_000, incomeUSD: 1_000, fixedExpensesDebtorId: nil)

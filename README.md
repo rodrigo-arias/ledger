@@ -15,7 +15,7 @@ A personal ledger for couples sharing expenses. Track daily spending in ARS/USD,
 ## Tech Stack
 
 - SwiftUI + SwiftData
-- iOS 18+ / macOS 15+
+- iOS 26+ / macOS 26+
 
 ## Roadmap
 

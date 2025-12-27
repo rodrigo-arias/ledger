@@ -33,10 +33,10 @@ enum SampleData {
     }
 
     static var sampleExpense: Expense {
-        household.expenses.first ?? Expense(amount: 1_000, concept: "Ejemplo")
+        (household.expenses ?? []).first ?? Expense(amount: 1_000, concept: "Ejemplo")
     }
 
     static var samplePerson: Person {
-        household.members.first ?? Person(name: "Usuario")
+        (household.members ?? []).first ?? Person(name: "Usuario")
     }
 }

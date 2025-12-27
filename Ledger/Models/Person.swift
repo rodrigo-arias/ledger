@@ -8,21 +8,25 @@ import SwiftData
 
 @Model
 final class Person {
-    var id: UUID
-    var name: String
-    var isCurrentUser: Bool
+    var id: UUID = UUID()
+    var name: String = ""
+    var updatedAt: Date = Date()
 
     var household: Household?
 
     @Relationship(inverse: \Expense.paidBy)
-    var expensesPaid: [Expense] = []
+    var expensesPaid: [Expense]?
 
     @Relationship(inverse: \MonthlyConfig.person)
-    var monthlyConfigs: [MonthlyConfig] = []
+    var monthlyConfigs: [MonthlyConfig]?
 
-    init(name: String, isCurrentUser: Bool = false) {
+    init(name: String) {
         id = UUID()
         self.name = name
-        self.isCurrentUser = isCurrentUser
+        updatedAt = Date()
+    }
+
+    var isCurrentUser: Bool {
+        CurrentUserManager.shared.isCurrentUser(self)
     }
 }

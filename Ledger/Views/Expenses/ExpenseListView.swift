@@ -38,11 +38,11 @@ struct ExpenseListView: View {
     @State private var expenseSort: ExpenseSort = .byDate
 
     private var currentUser: Person? {
-        household.members.first { $0.isCurrentUser }
+        (household.members ?? []).first { $0.isCurrentUser }
     }
 
     private var otherUser: Person? {
-        household.members.first { !$0.isCurrentUser }
+        (household.members ?? []).first { !$0.isCurrentUser }
     }
 
     private var expenses: [Expense] {
@@ -84,7 +84,7 @@ struct ExpenseListView: View {
     }
 
     private var selectedMonthConfig: MonthlyConfig? {
-        household.monthlyConfigs.first {
+        (household.monthlyConfigs ?? []).first {
             $0.year == selectedYear && $0.month == selectedMonth
         }
     }
@@ -203,7 +203,7 @@ struct ExpenseListView: View {
 
     private func exchangeRateFor(expense: Expense) -> Decimal {
         let (year, month) = expense.yearMonth
-        return household.monthlyConfigs
+        return (household.monthlyConfigs ?? [])
             .first { $0.year == year && $0.month == month }?
             .exchangeRate ?? 1
     }

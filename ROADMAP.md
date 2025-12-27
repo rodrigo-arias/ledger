@@ -8,9 +8,10 @@
 | 2 | Expenses | ✓ Done |
 | 3 | Balance | ✓ Done |
 | 4 | Payments & Closing | ✓ Done |
-| 5 | Expense Groups | Pending |
-| 6 | Extras | Pending |
-| 7 | CloudKit Sync | Pending |
+| 5 | CloudKit Sync | Pending |
+| 6 | Expense Groups | Pending |
+| 7 | Extras | Pending |
+| 8 | Subscriptions | Pending |
 
 ---
 
@@ -75,7 +76,27 @@
 
 ---
 
-## Phase 5: Expense Groups
+## Phase 5: CloudKit Sync
+
+### Goals
+- Sync between Apple devices
+- Share Household between 2 users
+- Offline-first
+
+### Tasks
+- [ ] Configure CloudKit container in Xcode
+- [ ] Add container ID in entitlements
+- [ ] Migrate models to CloudKit-compatible
+- [ ] Implement CKShare for Household
+- [ ] UI to invite other user
+- [ ] UI to accept invitation
+- [ ] Conflict handling (last-write-wins)
+- [ ] Sync status indicator
+- [ ] Testing with 2 devices
+
+---
+
+## Phase 6: Expense Groups
 
 ### Goals
 - Create event summaries (vacations, trips, etc.)
@@ -107,67 +128,76 @@
 
 ---
 
-## Phase 6: Extras
+## Phase 7: Extras
 
-### 6.1 Charts
+### 7.1 Charts
 - [ ] Expense history (timeline)
 - [ ] Expense history by category
 - [ ] Pie chart by category (current month)
 
-### 6.2 UX Improvements
+### 7.2 UX Improvements
 - [ ] Duplicate expense
 - [ ] Dark mode verified
 - [ ] iOS/macOS Widgets
 
-### 6.3 Export
+### 7.3 Export
 - [ ] Export to CSV
 - [ ] Export to PDF (monthly summary)
 - [ ] Annual summary
 
-### 6.4 iOS Integrations
+### 7.4 iOS Integrations
 - [ ] Siri Shortcuts ("Add expense $X in category Y")
 
 ---
 
-## Phase 7: CloudKit Sync
+## Phase 8: Subscriptions
 
 ### Goals
-- Sync between Apple devices
-- Share Household between 2 users
-- Offline-first
+- Track recurring subscriptions per user (separate from shared expenses)
+- Calculate total monthly cost across all subscriptions
+- View cost breakdown by category
+
+### Subscription Model
+```
+- service: String ("Netflix", "Spotify")
+- cost: Decimal
+- currency: Currency (ARS/USD)
+- periodicity: Periodicity (monthly/annual)
+- renewalDate: Date
+- category: Category
+- person: Person
+- household: Household
+```
+
+### Cost Calculation
+- Monthly periodicity → monthly cost = cost
+- Annual periodicity → monthly cost = cost / 12
 
 ### Tasks
-- [ ] Configure CloudKit container in Xcode
-- [ ] Add container ID in entitlements
-- [ ] Migrate models to CloudKit-compatible
-- [ ] Implement CKShare for Household
-- [ ] UI to invite other user
-- [ ] UI to accept invitation
-- [ ] Conflict handling (last-write-wins)
-- [ ] Sync status indicator
-- [ ] Testing with 2 devices
+- [ ] Create `Subscription` model
+- [ ] Create `Periodicity` enum (monthly, annual)
+- [ ] `SubscriptionListView` - list by user
+- [ ] `AddSubscriptionView` - form
+- [ ] `SubscriptionDetailView` - edit/delete
+- [ ] Monthly cost summary view
+- [ ] Cost by category chart
+- [ ] Renewal date reminders (optional)
 
 ---
 
 ## Phase Dependencies
 
 ```
-Phase 1 ─► Phase 2 ─► Phase 3 ─► Phase 4
-                          │
-                          ▼
-                       Phase 5
-                          │
-                          ▼
-                       Phase 6
-                          │
-                          ▼
-                       Phase 7
+Phase 1 ─► Phase 2 ─► Phase 3 ─► Phase 4 ─► Phase 5
+                                    │
+                                    ├──► Phase 6
+                                    ├──► Phase 7
+                                    └──► Phase 8
 ```
 
 - Phases 1-4: sequential (core functionality)
-- Phase 5: requires phase 3 (needs expense selector)
-- Phase 6: independent, can be done in parallel
-- Phase 7: at the end (requires stable functionality)
+- Phase 5: CloudKit sync (priority - enables shared usage)
+- Phase 6-8: independent, can be done in any order after phase 4
 
 ---
 
@@ -175,8 +205,8 @@ Phase 1 ─► Phase 2 ─► Phase 3 ─► Phase 4
 
 ### Stack
 - SwiftUI + SwiftData
-- iOS 17+ / macOS 14+
-- CloudKit (phase 7)
+- iOS 26+ / macOS 26+
+- CloudKit (phase 5)
 
 ### Architecture
 - Local-first
