@@ -33,7 +33,7 @@ struct BalanceView: View {
     }
 
     private var monthConfigs: [MonthlyConfig] {
-        household.monthlyConfigs.filter {
+        (household.monthlyConfigs ?? []).filter {
             $0.year == selectedYear && $0.month == selectedMonth
         }
     }
@@ -92,12 +92,12 @@ struct BalanceView: View {
 
     private var fixedExpensesDebtor: Person? {
         guard let debtorId = monthConfigs.first?.fixedExpensesDebtorId else { return nil }
-        return household.members.first { $0.id == debtorId }
+        return (household.members ?? []).first { $0.id == debtorId }
     }
 
     // Personas en orden consistente (alfabético por nombre - NO depende del usuario actual)
     private var personsByName: [Person] {
-        household.members.sorted { $0.name < $1.name }
+        (household.members ?? []).sorted { $0.name < $1.name }
     }
 
     private var firstPerson: Person? {
@@ -109,7 +109,7 @@ struct BalanceView: View {
     }
 
     private var currentUser: Person? {
-        household.members.first { $0.isCurrentUser }
+        (household.members ?? []).first { $0.isCurrentUser }
     }
 
     private var isCurrentUserFirstPerson: Bool {
@@ -331,7 +331,7 @@ struct BalanceView: View {
     }
 
     private func calculateDebtorCreditor() -> (debtor: Person?, creditor: Person?) {
-        let secondPerson = household.members.first { $0.id != firstPerson?.id }
+        let secondPerson = (household.members ?? []).first { $0.id != firstPerson?.id }
 
         if totalBalanceToPay > 0 {
             // Positivo = primera persona debe

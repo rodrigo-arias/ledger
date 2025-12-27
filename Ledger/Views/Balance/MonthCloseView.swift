@@ -57,7 +57,7 @@ struct MonthCloseView: View {
     }
 
     private var personsByName: [Person] {
-        household.members.sorted { $0.name < $1.name }
+        (household.members ?? []).sorted { $0.name < $1.name }
     }
 
     private var debtor: Person? {

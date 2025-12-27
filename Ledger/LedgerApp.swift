@@ -8,12 +8,8 @@ import SwiftUI
 
 @main
 struct LedgerApp: App {
-    #if DEBUG
-    // Usar datos de ejemplo para testing
-    private let useSampleData = true
-    #else
+    // Set to true to use in-memory sample data (no CloudKit)
     private let useSampleData = false
-    #endif
 
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -26,18 +22,12 @@ struct LedgerApp: App {
             MonthlyClose.self
         ])
 
-        #if DEBUG
-        // En desarrollo, usar almacenamiento en memoria para evitar problemas de migración
+        let containerID = "iCloud.\(Bundle.main.bundleIdentifier!)"
         let modelConfiguration = ModelConfiguration(
             schema: schema,
-            isStoredInMemoryOnly: true
+            isStoredInMemoryOnly: false,
+            cloudKitDatabase: .private(containerID)
         )
-        #else
-        let modelConfiguration = ModelConfiguration(
-            schema: schema,
-            isStoredInMemoryOnly: false
-        )
-        #endif
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])

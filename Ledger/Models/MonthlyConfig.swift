@@ -11,12 +11,13 @@ import SwiftData
 
 @Model
 final class MonthlyConfig {
-    var id: UUID
-    var year: Int
-    var month: Int // 1-12
-    var exchangeRate: Decimal // ARS por USD
-    var incomeUSD: Decimal // Ingreso de esta persona en USD
+    var id: UUID = UUID()
+    var year: Int = 2_025
+    var month: Int = 1 // 1-12
+    var exchangeRate: Decimal = 1_000 // ARS por USD
+    var incomeUSD: Decimal = 0 // Ingreso de esta persona en USD
     var fixedExpensesDebtorId: UUID? // ID de la persona que debe los gastos fijos este mes
+    var updatedAt: Date = Date()
 
     var person: Person?
     var household: Household?
@@ -28,6 +29,7 @@ final class MonthlyConfig {
         self.exchangeRate = exchangeRate
         self.incomeUSD = incomeUSD
         self.fixedExpensesDebtorId = fixedExpensesDebtorId
+        updatedAt = Date()
     }
 
     /// Calcula el porcentaje de aporte de esta persona para el mes.

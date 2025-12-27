@@ -10,25 +10,26 @@ import SwiftData
 
 @Model
 final class MonthlyClose {
-    var id: UUID
-    var year: Int
-    var month: Int // 1-12
-    var closedAt: Date
+    var id: UUID = UUID()
+    var year: Int = 2_025
+    var month: Int = 1 // 1-12
+    var closedAt: Date = Date()
 
     // Snapshot de valores al momento del cierre
-    var totalExpensesARS: Decimal // Total de gastos del mes en ARS
-    var carryOverFromPrevious: Decimal // Arrastre del mes anterior
-    var balanceAtClose: Decimal // Saldo pendiente al cierre (se arrastra)
+    var totalExpensesARS: Decimal = 0 // Total de gastos del mes en ARS
+    var carryOverFromPrevious: Decimal = 0 // Arrastre del mes anterior
+    var balanceAtClose: Decimal = 0 // Saldo pendiente al cierre (se arrastra)
 
     // Tipo de cambio usado para los cálculos
-    var exchangeRateUsed: Decimal
+    var exchangeRateUsed: Decimal = 1_000
 
     // Estado del cierre
     var isClosed: Bool = true
+    var updatedAt: Date = Date()
 
     var household: Household?
     @Relationship(deleteRule: .cascade, inverse: \Payment.monthlyClose)
-    var payments: [Payment] = []
+    var payments: [Payment]?
 
     init(
         year: Int,
@@ -46,6 +47,7 @@ final class MonthlyClose {
         self.carryOverFromPrevious = carryOverFromPrevious
         self.balanceAtClose = balanceAtClose
         self.exchangeRateUsed = exchangeRateUsed
+        updatedAt = Date()
     }
 
     /// Identificador único del período (ej: "2025-01")

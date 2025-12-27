@@ -35,7 +35,7 @@ opt_in_rules:
   - private_action
   - private_outlet
   - redundant_nil_coalescing
-  - redundant_type_annotation
+  # redundant_type_annotation - disabled because SwiftData/CloudKit requires explicit types
   - sorted_first_last
   - toggle_bool
   - unneeded_parentheses_in_closure_argument
@@ -54,7 +54,7 @@ file_length:
   error: 1000
 
 type_body_length:
-  warning: 350
+  warning: 400
   error: 500
 
 function_body_length:

@@ -23,7 +23,7 @@ struct MonthlyConfigView: View {
     @State private var fixedExpensesDebtorId: UUID?
 
     private var members: [Person] {
-        household.members.sorted { ($0.isCurrentUser ? 0 : 1) < ($1.isCurrentUser ? 0 : 1) }
+        (household.members ?? []).sorted { ($0.isCurrentUser ? 0 : 1) < ($1.isCurrentUser ? 0 : 1) }
     }
 
     private var person1: Person? { members.first }
@@ -38,7 +38,7 @@ struct MonthlyConfigView: View {
     private var previousMonthConfigs: [MonthlyConfig] {
         let prevMonth = month == 1 ? 12 : month - 1
         let prevYear = month == 1 ? year - 1 : year
-        return household.monthlyConfigs.filter { $0.year == prevYear && $0.month == prevMonth }
+        return (household.monthlyConfigs ?? []).filter { $0.year == prevYear && $0.month == prevMonth }
     }
 
     private var previousExchangeRate: Decimal? {
@@ -148,7 +148,7 @@ struct MonthlyConfigView: View {
                 Section {
                     Picker("Debe gastos fijos", selection: $fixedExpensesDebtorId) {
                         Text("Nadie").tag(nil as UUID?)
-                        ForEach(household.members) { person in
+                        ForEach(household.members ?? []) { person in
                             Text(person.name).tag(person.id as UUID?)
                         }
                     }
@@ -179,7 +179,7 @@ struct MonthlyConfigView: View {
     // MARK: - Data
 
     private func loadConfig() {
-        let existingConfigs = household.monthlyConfigs.filter { $0.year == year && $0.month == month }
+        let existingConfigs = (household.monthlyConfigs ?? []).filter { $0.year == year && $0.month == month }
 
         if let first = existingConfigs.first {
             isEditing = true
@@ -215,7 +215,7 @@ struct MonthlyConfigView: View {
               let i2 = parsedIncome2
         else { return }
 
-        let existingConfigs = household.monthlyConfigs.filter { $0.year == year && $0.month == month }
+        let existingConfigs = (household.monthlyConfigs ?? []).filter { $0.year == year && $0.month == month }
         for config in existingConfigs {
             modelContext.delete(config)
         }

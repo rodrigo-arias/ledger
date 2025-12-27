@@ -71,18 +71,15 @@ struct HouseholdSetupView: View {
     private func createHousehold() {
         let household = Household(name: householdName.trimmingCharacters(in: .whitespaces))
 
-        let person1 = Person(
-            name: person1Name.trimmingCharacters(in: .whitespaces),
-            isCurrentUser: currentUserIs1
-        )
-        let person2 = Person(
-            name: person2Name.trimmingCharacters(in: .whitespaces),
-            isCurrentUser: !currentUserIs1
-        )
+        let person1 = Person(name: person1Name.trimmingCharacters(in: .whitespaces))
+        let person2 = Person(name: person2Name.trimmingCharacters(in: .whitespaces))
 
         person1.household = household
         person2.household = household
         household.members = [person1, person2]
+
+        // Set current user on this device
+        CurrentUserManager.shared.setCurrentUser(currentUserIs1 ? person1 : person2)
 
         // Crear categorías por defecto
         let categories = Category.defaultCategories.enumerated().map { index, cat in

@@ -30,7 +30,7 @@ struct ExpenseDetailView: View {
     @State private var showingDeleteConfirmation = false
 
     private var categories: [Category] {
-        household.categories.sorted { $0.sortOrder < $1.sortOrder }
+        (household.categories ?? []).sorted { $0.sortOrder < $1.sortOrder }
     }
 
     private var isMonthClosed: Bool {
@@ -92,7 +92,7 @@ struct ExpenseDetailView: View {
 
                     Picker("Pagó", selection: $selectedPerson) {
                         Text("Seleccionar").tag(nil as Person?)
-                        ForEach(household.members) { person in
+                        ForEach(household.members ?? []) { person in
                             Text(person.name).tag(person as Person?)
                         }
                     }
